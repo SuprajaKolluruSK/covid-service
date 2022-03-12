@@ -56,70 +56,76 @@ public class Service {
 	public double deaths(Map<String, Map<String, Map<country, Object>>> input) {
 		double sumOfDeaths = 0.0;
 
-		
-		for (Map.Entry<String, Map<String, Map<country, Object>>> entry : input.entrySet()) {
-			if (entry.getValue().get(Constants.ALL) != null) {
-				Map<country, Object> allEntry = entry.getValue().get(Constants.ALL);
+		try {
+			for (Map.Entry<String, Map<String, Map<country, Object>>> entry : input.entrySet()) {
+				if (entry.getValue().get(Constants.ALL) != null) {
+					Map<country, Object> allEntry = entry.getValue().get(Constants.ALL);
 
-				if (allEntry.get(Constants.DEATHS) != null && allEntry.get(Constants.POPULATION) != null) {
-					Object deaths = allEntry.get(Constants.DEATHS);
+					if (allEntry.get(Constants.DEATHS) != null && allEntry.get(Constants.POPULATION) != null) {
+						Object deaths = allEntry.get(Constants.DEATHS);
 
-					int deaths1 = (int) (deaths);
-					double deaths2 = (double) deaths1;
-					double percentage = 0.0;
-					Object population = allEntry.get(Constants.POPULATION);
-					if (population instanceof Integer) {
+						int deaths1 = (int) (deaths);
+						double deaths2 = (double) deaths1;
+						double percentage = 0.0;
+						Object population = allEntry.get(Constants.POPULATION);
+						if (population instanceof Integer) {
 
-						int population1 = (int) (population);
-						double population2 = (double) population1;
+							int population1 = (int) (population);
+							double population2 = (double) population1;
 
-						percentage = (deaths2 / population2) * 100;
-					} else {
+							percentage = (deaths2 / population2) * 100;
+						} else {
 
-						long population1 = (long) (population);
-						double population2 = (double) population1;
-						percentage = (deaths2 / population2) * 100;
+							long population1 = (long) (population);
+							double population2 = (double) population1;
+							percentage = (deaths2 / population2) * 100;
 
+						}
+						deathsOfcountry.put(entry.getKey(), percentage);
+
+						sumOfDeaths = sumOfDeaths + percentage;
 					}
-					deathsOfcountry.put(entry.getKey(), percentage);
 
-					sumOfDeaths = sumOfDeaths + percentage;
 				}
 
 			}
-
+		}
+		catch(Exception e){
+			
+			return sumOfDeaths;
 		}
 		return sumOfDeaths;
 		
 	}
 	
-	public double productCalculation(double sumofDeaths,double sumofVaccinated) {
+	public String productCalculation(double sumofDeaths,double sumofVaccinated) {
 		
 		Set<String> deathkey = deathsOfcountry.keySet();
 		double product = 0.0;
 		double sumOfDeathsandVaccinated = 0.0;
-		double productofsum = 0.0;
-		double productofsum2 = 0.0;
+		double productofdeaths = 0.0;
+		double productofvaccine = 0.0;
 		double sumofDeathsProduct = 0.0;
 		double sumOfVaccinatedProduct = 0.0;
 
 		for (String name : deathkey) {
 			if (deathsOfcountry.get(name) != null && vaccine.get(name) != null) {
 				product = deathsOfcountry.get(name) * vaccine.get(name);
-				productofsum = deathsOfcountry.get(name) * deathsOfcountry.get(name);
-				sumofDeathsProduct = sumofDeathsProduct + productofsum;
-				productofsum2 = vaccine.get(name) * vaccine.get(name);
-				sumOfVaccinatedProduct = sumOfVaccinatedProduct + productofsum2;
+				productofdeaths = deathsOfcountry.get(name) * deathsOfcountry.get(name);
+				sumofDeathsProduct = sumofDeathsProduct + productofdeaths;
+				productofvaccine = vaccine.get(name) * vaccine.get(name);
+				sumOfVaccinatedProduct = sumOfVaccinatedProduct + productofvaccine;
 				sumOfDeathsandVaccinated = sumOfDeathsandVaccinated + product;
 			}
 		}
 		double coefficient = coefficient(sumofDeaths,sumofVaccinated,sumOfDeathsandVaccinated,countries,sumofDeathsProduct,sumOfVaccinatedProduct);
 
+		String result =  String.valueOf(coefficient);
+
+
+		return result;
 		
-		return coefficient;
-		
-		
-		
+
 	}
 	
      public double percentage(double deaths,double population) {

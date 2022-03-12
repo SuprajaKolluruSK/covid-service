@@ -21,15 +21,21 @@ public class Controller {
 
 	@GetMapping(value = "/src")
 
-	public double covid(@RequestParam(required = false) String continent) {
+	public String covid(@RequestParam(required = false) String continent) {
 
+		double sumOfVaccinated = 0.0;
+		double sumOfDeaths = 0.0;
 		Map<String, Map<String, Map<country, Object>>> deathsInfo = restTemplate
 				.getForObject("https://covid-api.mmediagroup.fr/v1/cases?continent=" + continent, Map.class);
 		Map<String, Map<String, Map<country, Object>>> vaccinatedInfo = restTemplate
 				.getForObject("https://covid-api.mmediagroup.fr/v1/vaccines?continent=" + continent, Map.class);
 
-		double sumOfVaccinated=  service.vaccinated(vaccinatedInfo);
-		double sumOfDeaths = service.deaths(deathsInfo);
+		if(deathsInfo!=null && vaccinatedInfo!=null) {
+			 sumOfVaccinated = service.vaccinated(vaccinatedInfo);
+			 sumOfDeaths = service.deaths(deathsInfo);
+		}else{
+			return "No data found";
+		}
 
 
 		return service.productCalculation(sumOfDeaths, sumOfVaccinated);

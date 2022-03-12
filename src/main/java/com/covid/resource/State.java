@@ -3,12 +3,12 @@ package com.covid.resource;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+/*import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(value=Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown=true )
+@JsonIgnoreProperties(ignoreUnknown=true )*/
 public class State {
 
 	private String lat;
