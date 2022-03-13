@@ -1,26 +1,32 @@
 package com.covid.resource;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Service {
+
+	Logger logger = LoggerFactory.getLogger(Service.class);
 
 	Map<String, Double> vaccine = new HashMap<String, Double>();
 	Map<String, Double> deathsOfcountry = new HashMap<String, Double>();
      int countries=0;
 
 	
-	public double vaccinated(Map<String, Map<String, Map<country, Object>>> input) {
+	public double vaccinated(Map<String, Map<String, Map<String, Object>>> input) {
 		double sumofVaccinated = 0.0;
 
 		 countries = input.keySet().size();
 
-		for (Map.Entry<String, Map<String, Map<country, Object>>> vaccineEntry : input.entrySet()) {
+			logger.info("Fetching the sum of vaccinated people");
+
+	try {		
+		for (Map.Entry<String, Map<String, Map<String, Object>>> vaccineEntry : input.entrySet()) {
 			if (vaccineEntry.getValue().get(Constants.ALL) != null) {
-				Map<country, Object> allEntry = vaccineEntry.getValue().get(Constants.ALL);
+				Map<String, Object> allEntry = vaccineEntry.getValue().get(Constants.ALL);
 
 				if (allEntry.get(Constants.VACCINATED) != null && allEntry.get(Constants.POPULATION) != null) {
 					Object deaths = allEntry.get(Constants.VACCINATED);
@@ -49,17 +55,24 @@ public class Service {
 			}
 
 		}
+	}catch(Exception e) {
+		logger.error("Error while caculating the vaccinated people"+e.getClass());
+
+		
+	}
 		return sumofVaccinated;
 		
 	}
 	
-	public double deaths(Map<String, Map<String, Map<country, Object>>> input) {
+	public double deaths(Map<String, Map<String, Map<String, Object>>> input) {
 		double sumOfDeaths = 0.0;
 
+		logger.info("Fetching the sum of death people");
+
 		try {
-			for (Map.Entry<String, Map<String, Map<country, Object>>> entry : input.entrySet()) {
+			for (Map.Entry<String, Map<String, Map<String, Object>>> entry : input.entrySet()) {
 				if (entry.getValue().get(Constants.ALL) != null) {
-					Map<country, Object> allEntry = entry.getValue().get(Constants.ALL);
+					Map<String, Object> allEntry = entry.getValue().get(Constants.ALL);
 
 					if (allEntry.get(Constants.DEATHS) != null && allEntry.get(Constants.POPULATION) != null) {
 						Object deaths = allEntry.get(Constants.DEATHS);
@@ -92,7 +105,7 @@ public class Service {
 		}
 		catch(Exception e){
 			
-			return sumOfDeaths;
+			logger.error("Error while caculating the vaccinated people"+e.getClass());
 		}
 		return sumOfDeaths;
 		
@@ -103,18 +116,18 @@ public class Service {
 		Set<String> deathkey = deathsOfcountry.keySet();
 		double product = 0.0;
 		double sumOfDeathsandVaccinated = 0.0;
-		double productofdeaths = 0.0;
-		double productofvaccine = 0.0;
+		double productOfDeaths = 0.0;
+		double productOfVaccine = 0.0;
 		double sumofDeathsProduct = 0.0;
 		double sumOfVaccinatedProduct = 0.0;
 
 		for (String name : deathkey) {
 			if (deathsOfcountry.get(name) != null && vaccine.get(name) != null) {
 				product = deathsOfcountry.get(name) * vaccine.get(name);
-				productofdeaths = deathsOfcountry.get(name) * deathsOfcountry.get(name);
-				sumofDeathsProduct = sumofDeathsProduct + productofdeaths;
-				productofvaccine = vaccine.get(name) * vaccine.get(name);
-				sumOfVaccinatedProduct = sumOfVaccinatedProduct + productofvaccine;
+				productOfDeaths = deathsOfcountry.get(name) * deathsOfcountry.get(name);
+				sumofDeathsProduct = sumofDeathsProduct + productOfDeaths;
+				productOfVaccine = vaccine.get(name) * vaccine.get(name);
+				sumOfVaccinatedProduct = sumOfVaccinatedProduct + productOfVaccine;
 				sumOfDeathsandVaccinated = sumOfDeathsandVaccinated + product;
 			}
 		}

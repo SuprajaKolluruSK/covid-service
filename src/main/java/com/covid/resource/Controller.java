@@ -1,6 +1,9 @@
 package com.covid.resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +16,8 @@ import java.util.Set;
 @RestController
 
 public class Controller {
+	
+	Logger logger = LoggerFactory.getLogger(Controller.class);
 
 	@Autowired
 	RestTemplate restTemplate;
@@ -21,24 +26,25 @@ public class Controller {
 
 	@GetMapping(value = "/src")
 
-	public String covid(@RequestParam(required = false) String continent) {
+	public ResponseEntity<String> covid(@RequestParam(required = false) String continent) {
 
 		double sumOfVaccinated = 0.0;
 		double sumOfDeaths = 0.0;
-		Map<String, Map<String, Map<country, Object>>> deathsInfo = restTemplate
+		Map<String, Map<String, Map<String, Object>>> deathsInfo = restTemplate
 				.getForObject("https://covid-api.mmediagroup.fr/v1/cases?continent=" + continent, Map.class);
-		Map<String, Map<String, Map<country, Object>>> vaccinatedInfo = restTemplate
+		Map<String, Map<String, Map<String, Object>>> vaccinatedInfo = restTemplate
 				.getForObject("https://covid-api.mmediagroup.fr/v1/vaccines?continent=" + continent, Map.class);
 
-		if(deathsInfo!=null && vaccinatedInfo!=null) {
+		if(deathsInfo!=null && vaccinatedInfo!=null && !deathsInfo.isEmpty() && !vaccinatedInfo.isEmpty()) {
 			 sumOfVaccinated = service.vaccinated(vaccinatedInfo);
 			 sumOfDeaths = service.deaths(deathsInfo);
 		}else{
-			return "No data found";
+			logger.info("No data found");
+			return ResponseEntity.notFound().build();
 		}
 
 
-		return service.productCalculation(sumOfDeaths, sumOfVaccinated);
+		return ResponseEntity.ok().body(service.productCalculation(sumOfDeaths, sumOfVaccinated));
 
 	}
 
