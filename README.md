@@ -22,4 +22,5 @@ API src?continent={continent}
 returns the correlation coefficient of a continent
 
 
+<img width="602" alt="image" src="https://user-images.githubusercontent.com/95203590/158051509-44e66422-121e-466c-8349-27fecf1f6ecd.png">
 
