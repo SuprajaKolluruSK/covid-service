@@ -6,14 +6,14 @@ Formula of correlation coefficient
 
 <img width="312" alt="image" src="https://user-images.githubusercontent.com/95203590/158044883-90992c03-f81f-40cd-add3-9ae8a8790bc7.png">
 
-Here X reprsents -> percentage of death of a given country in a continent
-Y reprsents -> percentage of vaccinated of a given country in a continent
+Here X reprsents the  percentage of death of a given country in a continent
+ and Y reprsents percentage of vaccinated of a given country in a continent
 
 Steps to run the project
 
-Use mvn clean install to build the project
+1.Use mvn clean install to build the project
 
-Import the project in a IDE and the give the run configuration as follows
+2.Import the project in a IDE and the give the run configuration as follows
 
 <img width="837" alt="image" src="https://user-images.githubusercontent.com/95203590/158044955-29deb350-0aa4-4b59-9aff-0c2e2542a6f8.png">
 
