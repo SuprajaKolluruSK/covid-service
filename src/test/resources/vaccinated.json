@@ -1,0 +1,38 @@
+{
+    "Albania": {
+        "All": {
+            "administered": 2729969,
+            "people_vaccinated": 1206964,
+            "people_partially_vaccinated": 1274514,
+            "country": "Albania",
+            "population": 2930187,
+            "sq_km_area": 28748,
+            "life_expectancy": "71.6",
+            "elevation_in_meters": null,
+            "continent": "Europe",
+            "abbreviation": "AL",
+            "location": "Southern Europe",
+            "iso": 8,
+            "capital_city": "Tirana",
+            "updated": "2022/03/12 00:00:00+00"
+        }
+    },
+    "Andorra": {
+        "All": {
+            "administered": 142420,
+            "people_vaccinated": 53250,
+            "people_partially_vaccinated": 57797,
+            "country": "Andorra",
+            "population": 76965,
+            "sq_km_area": 468,
+            "life_expectancy": "83.5",
+            "elevation_in_meters": "1,996",
+            "continent": "Europe",
+            "abbreviation": "AD",
+            "location": "Southern Europe",
+            "iso": 20,
+            "capital_city": "Andorra la Vella",
+            "updated": "2022/03/12 00:00:00+00"
+        }
+    }
+  }
