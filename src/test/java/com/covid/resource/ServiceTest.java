@@ -1,7 +1,5 @@
 package com.covid.resource;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -26,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ServiceTest {
 	
 	@Mock
-	private Service mockservice;
+	private ServiceLayer mockservice;
 
 	
 	@Test

@@ -6,10 +6,12 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
-public class Service {
+@Service
+public class ServiceLayer {
 
-	Logger logger = LoggerFactory.getLogger(Service.class);
+	Logger logger = LoggerFactory.getLogger(ServiceLayer.class);
 
 	Map<String, Double> vaccine = new HashMap<String, Double>();
 	Map<String, Double> deathsOfcountry = new HashMap<String, Double>();

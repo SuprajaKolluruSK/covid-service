@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 @RestController
 
@@ -22,8 +20,9 @@ public class Controller {
 	@Autowired
 	RestTemplate restTemplate;
 	@Autowired
-	Service service;
+	ServiceLayer service;
 
+	@SuppressWarnings("unchecked")
 	@GetMapping(value = "/src")
 
 	public ResponseEntity<String> covid(@RequestParam(required = false) String continent) {
