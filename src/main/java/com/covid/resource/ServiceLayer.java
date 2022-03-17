@@ -18,7 +18,7 @@ public class ServiceLayer {
      int countries=0;
 
      /*Calculates the sum of percentage of vaccinated people in a continent*/
-	
+	/*Calculates the sum of y in the formula*/
 	public double vaccinated(Map<String, Map<String, Map<String, Object>>> input) {
 		double sumofVaccinated = 0.0;
 
@@ -68,6 +68,7 @@ public class ServiceLayer {
 	}
 	
     /*Calculates the sum of percentage of death in a continent*/
+	/*Calculates the sum of x in the formula*/
 
 	
 	public double deaths(Map<String, Map<String, Map<String, Object>>> input) {
@@ -117,7 +118,6 @@ public class ServiceLayer {
 		
 	}
 	
-	/*calculates the correlation coefficient of a continent */
 	public String productCalculation(double sumofDeaths,double sumofVaccinated) {
 		
 		Set<String> deathkey = deathsOfcountry.keySet();
@@ -131,11 +131,11 @@ public class ServiceLayer {
 		for (String name : deathkey) {
 			if (deathsOfcountry.get(name) != null && vaccine.get(name) != null) {
 				product = deathsOfcountry.get(name) * vaccine.get(name);
+				sumOfDeathsandVaccinated = sumOfDeathsandVaccinated + product;//sum of product x and y
 				productOfDeaths = deathsOfcountry.get(name) * deathsOfcountry.get(name);
-				sumofDeathsProduct = sumofDeathsProduct + productOfDeaths;
+				sumofDeathsProduct = sumofDeathsProduct + productOfDeaths;//sum of product of x
 				productOfVaccine = vaccine.get(name) * vaccine.get(name);
-				sumOfVaccinatedProduct = sumOfVaccinatedProduct + productOfVaccine;
-				sumOfDeathsandVaccinated = sumOfDeathsandVaccinated + product;
+				sumOfVaccinatedProduct = sumOfVaccinatedProduct + productOfVaccine;//sum of product of y
 			}
 		}
 		double coefficient = coefficient(sumofDeaths,sumofVaccinated,sumOfDeathsandVaccinated,countries,sumofDeathsProduct,sumOfVaccinatedProduct);
@@ -154,6 +154,9 @@ public class ServiceLayer {
 		return (deaths/population)*100;
 		
 	}
+     
+ 	/*calculates the correlation coefficient of a continent */
+
 	public double coefficient(double sumofDeaths,double sumofVaccinated,double sumOfDeathsandVaccinated,int countries
 			,double sumofDeathsProduct,double sumOfVaccinatedProduct) {
 		
